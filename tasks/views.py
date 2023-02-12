@@ -6,20 +6,31 @@ from api_taskify.permissions import IsOwner
 
 class TaskList(generics.ListCreateAPIView):
     """
-    List all tasks, create new tasks.
+    List all tasks owner by the authenticated user.
+    Create new tasks.
     """
     serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    queryset = Task.objects.all()
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Task.objects.filter(user=self.request.user)
+        else:
+            return Task.objects.none()
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(user=self.request.user)  
 
 
 class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    Retrieve, update or delete a task instance.
+    Retrieve, update or delete a task instance if user is the owner.
     """
     permission_classes = [IsOwner]
     serializer_class = TaskSerializer
-    queryset = Task.objects.all()
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Task.objects.filter(user=self.request.user)
+        else:
+            return Task.objects.none()

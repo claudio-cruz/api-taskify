@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include('tasks.urls')),
     path('', include('events.urls')),
     path('', include('habits.urls')),
+    path('', include('notes.urls')),
 ]

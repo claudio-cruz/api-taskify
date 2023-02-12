@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 
 PRIORITY_CHOICES = [
@@ -8,26 +9,26 @@ PRIORITY_CHOICES = [
 ]
 
 CATEGORY_CHOICES = [
+    ('other', 'Other'),
     ('study', 'Study'),
     ('finance', 'Finance'),
     ('work', 'Work'),
     ('sport', 'Sport'),
     ('social', 'Social'),
     ('home', 'Home'),
-    ('other', 'Other'),
 ]
 
 REPEAT_CHOICES = [
+        ('none', 'No repeat'),
         ('daily', 'Everyday'),
         ('weekly', 'Once a Week'),
         ('monthly', 'Once a Month'),
         ('yearly', 'Once a Year'),
-        ('none', 'No repeat'),
     ]
 
 
 class Event(models.Model):
-    name = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     event = models.CharField(max_length=100)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
@@ -47,3 +48,11 @@ class Event(models.Model):
 
     def __str__(self):
         return f'{self.id} {self.event}'
+
+
+def create_event(sender, instance, created, **kwargs):
+    if created:
+        Event.objects.create(user=instance)
+
+
+post_save.connect(create_event, sender=User)

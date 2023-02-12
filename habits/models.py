@@ -18,35 +18,36 @@ CATEGORY_CHOICES = [
     ('home', 'Home'),
 ]
 
-REPEAT_CHOICES = [
-        ('none', 'No repeat'),
+FREQUENCY_CHOICES = [
         ('daily', 'Everyday'),
-        ('weekly', 'Once a Week'),
-        ('monthly', 'Once a Month'),
-        ('yearly', 'Once a Year'),
+        ('six times a week', 'Six times a week'),
+        ('five times a week', 'Five times a week'),
+        ('four times a week', 'Four times a week'),
+        ('three times a week', 'Three times a week'),
+        ('two times a week', 'Two times a week'),
+        ('ones a week', 'Ones a week'),
     ]
 
 
-class Event(models.Model):
+class Habit(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    event = models.CharField(max_length=100)
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    habit = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    repeat = models.CharField(max_length=10, choices=REPEAT_CHOICES)
+    time = models.TimeField()
+    frequency = models.CharField(max_length=20, choices=FREQUENCY_CHOICES)
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES)
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
 
     class Meta:
-        ordering = ['-start_time', 'priority']
+        ordering = ['-time', 'priority']
 
     def __str__(self):
-        return f'{self.id} {self.event}'
+        return f'{self.id} {self.habit}'
 
 
-def create_event(sender, instance, created, **kwargs):
+def create_habit(sender, instance, created, **kwargs):
     if created:
-        Event.objects.create(user=instance)
+        Habit.objects.create(user=instance)
 
 
-post_save.connect(create_event, sender=User)
+post_save.connect(create_habit, sender=User)

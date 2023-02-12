@@ -1,3 +1,36 @@
-from django.shortcuts import render
+from rest_framework import generics, permissions
+from .models import Event
+from .serializers import EventSerializer
+from api_taskify.permissions import IsOwner
 
-# Create your views here.
+
+class EventList(generics.ListCreateAPIView):
+    """
+    List all events owned by the authenticated user.
+    Create new events.
+    """
+    serializer_class = EventSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Event.objects.filter(user=self.request.user)
+        else:
+            return Event.objects.none()
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+class EventDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Retrieve, update or delete a event instance if user is the owner.
+    """
+    permission_classes = [IsOwner]
+    serializer_class = EventSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Event.objects.filter(user=self.request.user)
+        else:
+            return Event.objects.none()

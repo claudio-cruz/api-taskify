@@ -32,7 +32,7 @@ class Note(models.Model):
         ordering = ['-created_at', '-updated_at']
 
     def __str__(self):
-        return f'{self.id} {self.note}'
+        return f'{self.id} {self.title}'
 
 
 def create_note(sender, instance, created, **kwargs):

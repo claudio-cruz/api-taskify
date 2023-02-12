@@ -39,7 +39,7 @@ class Habit(models.Model):
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
 
     class Meta:
-        ordering = ['-time', 'priority']
+        ordering = ['time', 'priority']
 
     def __str__(self):
         return f'{self.id} {self.habit}'

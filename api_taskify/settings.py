@@ -37,7 +37,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-CSRF_TRUSTED_ORIGINS = ['https://8000-claudiocruz-apitaskify-nl160s3nm5p.ws-eu86.gitpod.io']
+CSRF_TRUSTED_ORIGINS = ['https://8000-claudiocruz-apitaskify-kfhitlrqen2.ws-eu86.gitpod.io']
 
 
 # Application definition
@@ -55,6 +55,7 @@ INSTALLED_APPS = [
 
     'profiles',
     'tasks',
+    'events',
 ]
 
 MIDDLEWARE = [

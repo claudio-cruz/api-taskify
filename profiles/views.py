@@ -6,16 +6,26 @@ from api_taskify.permissions import IsOwner
 
 class ProfileList(generics.ListAPIView):
     """
-    List all profiles.
+    List the profile of the currently authenticated user.
     """
-    queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Profile.objects.filter(user=self.request.user)
+        else:
+            return Profile.objects.none()
 
 
 class ProfileDetail(generics.RetrieveUpdateAPIView):
     """
-    Retrieve or update a profile if user is the owner.
+    Retrieve or update the profile of the currently authenticated user.
     """
     permission_classes = [IsOwner]
-    queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Profile.objects.filter(user=self.request.user)
+        else:
+            return Profile.objects.none()

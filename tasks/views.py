@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 from .models import Task
 from .serializers import TaskSerializer
 from api_taskify.permissions import IsOwner
@@ -11,6 +11,8 @@ class TaskList(generics.ListCreateAPIView):
     """
     serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    search_fields = ['task', 'description', 'due_date', 'priority', 'category']
+    filter_backends = (filters.SearchFilter,)
 
     def get_queryset(self):
         if self.request.user.is_authenticated:

@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 from .models import Note
 from .serializers import NoteSerializer
 from api_taskify.permissions import IsOwner
@@ -11,6 +11,10 @@ class NoteList(generics.ListCreateAPIView):
     """
     serializer_class = NoteSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    search_fields = [
+        'title', 'content', 'created_at', 'updated_at', 'priority', 'category'
+        ]
+    filter_backends = (filters.SearchFilter,)
 
     def get_queryset(self):
         if self.request.user.is_authenticated:

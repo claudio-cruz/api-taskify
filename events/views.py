@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 from .models import Event
 from .serializers import EventSerializer
 from api_taskify.permissions import IsOwner
@@ -11,6 +11,10 @@ class EventList(generics.ListCreateAPIView):
     """
     serializer_class = EventSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    search_fields = [
+        'event', 'description', 'start_time', 'priority', 'category'
+        ]
+    filter_backends = (filters.SearchFilter,)
 
     def get_queryset(self):
         if self.request.user.is_authenticated:

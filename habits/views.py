@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 from .models import Habit
 from .serializers import HabitSerializer
 from api_taskify.permissions import IsOwner
@@ -11,6 +11,10 @@ class HabitList(generics.ListCreateAPIView):
     """
     serializer_class = HabitSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    search_fields = [
+        'habit', 'description', 'time', 'frequency', 'priority', 'category'
+        ]
+    filter_backends = (filters.SearchFilter,)
 
     def get_queryset(self):
         if self.request.user.is_authenticated:

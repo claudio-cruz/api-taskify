@@ -29,7 +29,7 @@ class Task(models.Model):
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
 
     class Meta:
-        ordering = ['-due_date', 'priority']
+        ordering = ['due_date', 'priority']
 
     def __str__(self):
         return f'{self.id} {self.task}'

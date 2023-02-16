@@ -62,7 +62,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-CSRF_TRUSTED_ORIGINS = ['https://8000-claudiocruz-apitaskify-kfhitlrqen2.ws-eu86.gitpod.io']
+CSRF_TRUSTED_ORIGINS = [
+    'https://8000-claudiocruz-apitaskify-kfhitlrqen2.ws-eu87.gitpod.io'
+]
 
 
 # Application definition

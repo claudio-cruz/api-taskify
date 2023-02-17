@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 
 PRIORITY_CHOICES = [
@@ -31,9 +30,9 @@ FREQUENCY_CHOICES = [
 
 class Habit(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    habit = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    time = models.TimeField()
+    time = models.TimeField(blank=True)
     frequency = models.CharField(max_length=20, choices=FREQUENCY_CHOICES)
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES)
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
@@ -42,12 +41,4 @@ class Habit(models.Model):
         ordering = ['time', 'priority']
 
     def __str__(self):
-        return f'{self.id} {self.habit}'
-
-
-def create_habit(sender, instance, created, **kwargs):
-    if created:
-        Habit.objects.create(user=instance)
-
-
-post_save.connect(create_habit, sender=User)
+        return f'{self.id} {self.title}'

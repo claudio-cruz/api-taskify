@@ -1,2 +1,2 @@
 release: python manage.py makemigrations && python manage.py migrate
-web: gunicorn api-taskify.wsgi
+web: gunicorn api_taskify.wsgi

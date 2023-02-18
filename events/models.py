@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 
 PRIORITY_CHOICES = [
@@ -42,11 +41,3 @@ class Event(models.Model):
 
     def __str__(self):
         return f'{self.id} {self.event}'
-
-
-def create_event(sender, instance, created, **kwargs):
-    if created:
-        Event.objects.create(user=instance)
-
-
-post_save.connect(create_event, sender=User)

@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 
 PRIORITY_CHOICES = [
@@ -33,11 +32,3 @@ class Note(models.Model):
 
     def __str__(self):
         return f'{self.id} {self.title}'
-
-
-def create_note(sender, instance, created, **kwargs):
-    if created:
-        Note.objects.create(user=instance)
-
-
-post_save.connect(create_note, sender=User)

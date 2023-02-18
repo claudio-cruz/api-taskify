@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 
 PRIORITY_CHOICES = [
@@ -33,11 +32,3 @@ class Task(models.Model):
 
     def __str__(self):
         return f'{self.id} {self.task}'
-
-
-def create_task(sender, instance, created, **kwargs):
-    if created:
-        Task.objects.create(user=instance)
-
-
-post_save.connect(create_task, sender=User)

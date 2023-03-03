@@ -72,6 +72,9 @@ CSRF_TRUSTED_ORIGINS = [
     'https://8000-claudiocruz-apitaskify-kfhitlrqen2.ws-eu87.gitpod.io'
 ]
 
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
+ACCOUNT_EMAIL_REQUIRED = False
 
 # Application definition
 

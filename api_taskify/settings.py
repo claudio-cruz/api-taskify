@@ -38,10 +38,10 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
     'DATETIME_FORMAT': '%d %b %Y',
 }
-# if 'DEV' not in os.environ:
-#     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
-#         'rest_framework.renderers.JSONRenderer',
-#     ]
+if 'DEV' not in os.environ:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
+        'rest_framework.renderers.JSONRenderer',
+    ]
 
 REST_USE_JWT = True
 JWT_AUTH_SECURE = True
@@ -61,15 +61,15 @@ REST_AUTH_SERIALIZERS = {
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [
     'localhost',
     os.environ.get('ALLOWED_HOST'),
-    ]
+]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-claudiocruz-apitaskify-kfhitlrqen2.ws-eu87.gitpod.io'
+    'https://8000-claudiocruz-apitaskify-wjj8jdsbe1u.ws-eu89.gitpod.io'
 ]
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
@@ -117,7 +117,8 @@ MIDDLEWARE = [
 ]
 
 if 'CLIENT_ORIGIN_DEV' in os.environ:
-    extracted_url = re.match(r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE).group(0)
+    extracted_url = re.match(
+        r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE).group(0)
     CORS_ALLOWED_ORIGIN_REGEXES = [
         rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
     ]

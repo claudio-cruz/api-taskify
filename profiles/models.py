@@ -10,7 +10,7 @@ class Profile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     bio = models.TextField(blank=True)
-    profile_pic = models.ImageField(
+    image = models.ImageField(
         upload_to='images/', default='../user-icon_pdzqa4')
 
     class Meta:

@@ -15,6 +15,6 @@ class HabitSerializer(serializers.ModelSerializer):
         model = Habit
         fields = [
             'id', 'user', 'title', 'is_owner', 'profile_id',
-            'description', 'time', 'frequency',
+            'description', 'frequency',
             'priority', 'category'
         ]

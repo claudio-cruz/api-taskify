@@ -37,7 +37,7 @@ class Event(models.Model):
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
 
     class Meta:
-        ordering = ['-start_time', 'priority']
+        ordering = ['start_time', 'priority']
 
     def __str__(self):
         return f'{self.id} {self.event}'

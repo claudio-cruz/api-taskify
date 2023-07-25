@@ -69,7 +69,7 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-claudiocruz-apitaskify-wjj8jdsbe1u.ws-eu89.gitpod.io'
+    'https://8000-claudiocruz-apitaskify-wjj8jdsbe1u.ws-eu89.gitpod.io', 'https://8000-claudiocruz-apitaskify-ywa6i0mbily.ws-eu102.gitpod.io'
 ]
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'

@@ -12,7 +12,7 @@ class HabitList(generics.ListCreateAPIView):
     serializer_class = HabitSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     search_fields = [
-        'title', 'description', 'time', 'frequency', 'priority', 'category'
+        'title', 'description', 'frequency', 'priority', 'category'
         ]
     filter_backends = (filters.SearchFilter,)
 
